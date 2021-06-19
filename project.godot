@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Crypt Keeper"
-run/main_scene="res://arena/arena.tscn"
+run/main_scene="res://crypt/crypt.tscn"
 config/icon="res://icon.png"
 
 [autoload]
