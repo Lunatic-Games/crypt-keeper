@@ -6,6 +6,8 @@
 
 [node name="SelectArea" type="Area2D"]
 script = ExtResource( 1 )
+outline_color = Color( 1, 1, 1, 1 )
+overlay_color = Color( 1, 1, 1, 0.223529 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 0.785398
