@@ -6,7 +6,7 @@
 extents = Vector2( 4, 4 )
 
 [node name="Zombie" type="KinematicBody2D" groups=[
-"ally",
+"chaos",
 "zombie",
 ]]
 position = Vector2( 109.531, 183.345 )
