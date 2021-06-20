@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+var selected = false
 
 func _physics_process(delta):
 	if (selected):
