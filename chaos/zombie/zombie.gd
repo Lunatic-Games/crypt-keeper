@@ -5,7 +5,7 @@ var move_speed = 20
 var health = 2
 var attack_speed = 1.2
 var attack_damage = 1
-var attack_range = 15
+var preferred_focus_range = 15
 var focus
 var selected = false
 var follow_range = 30
@@ -17,6 +17,8 @@ onready var attack_timer = $AttackTimer
 func _physics_process(delta):
 	if (selected):
 		selected_ai()
+	else:
+		unselected_ai()
 
 
 func take_damage(damage):
@@ -62,6 +64,37 @@ func selected_ai():
 			pass
 
 
+func unselected_ai():
+	if (focus):
+		if is_focus_detected():
+			move_and_attack()
+		else:
+			get_new_focus()
+			if focus:
+				move_and_attack()
+			else:
+				# Do nothing
+				pass
+	else:
+		get_new_focus()
+		
+		if (focus):
+			move_and_attack()
+		else:
+			pass
+
+
+func move_and_attack():
+	
+	# Move towards focus
+	if position.distance_to(focus.position) > preferred_focus_range:
+		var direction = position.direction_to(focus.position)
+		move_and_slide(direction * move_speed)
+	
+	# If focus in range, attack
+	if position.distance_to(focus.position) < preferred_focus_range:
+		ready_attack()
+
 func ready_attack():
 	# Attack
 	if attack_timer.is_stopped():
@@ -103,7 +136,7 @@ func _on_AttackTimer_timeout():
 
 
 func is_focus_in_range():
-	if (position.distance_to(focus.position) <= attack_range):
+	if (position.distance_to(focus.position) <= preferred_focus_range):
 		return true
 	else:
 		return false
