@@ -1,12 +1,26 @@
 extends ProgressBar
 
-onready var health_tween = $HealthTween
+var fade_delay_time = 1
 
+onready var health_tween = $HealthTween
+onready var fade = $Fade
+onready var fade_delay = $FadeDelay
+
+var showing = false
 
 func update_health(current_health, max_health):
-	print("UPDATING HEALTH, is now: ", value)
+	if ! showing:
+		fade.play("in")
+	
+	yield(fade, "animation_finished")
+	fade_delay.start(fade_delay_time)
 	var goal_value = (current_health / max_health) * 100
-	print("GOAL VALUE: ", goal_value)
 	value = goal_value
-	health_tween.interpolate_property(self, "value", value, goal_value, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN)
-	health_tween.start()
+
+
+
+func _on_FadeDelay_timeout():
+	if fade.current_animation == "":
+		fade.play("out")
+	else:
+		fade_delay.start(fade_delay_time)

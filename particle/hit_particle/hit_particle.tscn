@@ -5,6 +5,7 @@
 [ext_resource path="res://particle/hit_particle/hit_particle.gd" type="Script" id=3]
 
 [node name="HitParticle" type="Particles2D"]
+z_index = 1
 emitting = false
 amount = 15
 lifetime = 0.5
