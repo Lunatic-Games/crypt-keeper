@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://chaos/zombie/zombie.tscn" type="PackedScene" id=2]
-[ext_resource path="res://order/knight/knight.tscn" type="PackedScene" id=3]
+[ext_resource path="res://unit/chaos/zombie/zombie.tscn" type="PackedScene" id=2]
+[ext_resource path="res://unit/order/knight/knight.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/light/door_light.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
