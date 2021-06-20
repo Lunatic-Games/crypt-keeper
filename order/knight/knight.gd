@@ -19,7 +19,6 @@ func _physics_process(delta):
 	
 	# If you already have a focus
 	if (focus):
-		print("HAS FOCUS: ", focus.get_name())
 		# Check if the focus is still in the detection range
 		if is_focus_detected():
 			handle_focus()
@@ -34,7 +33,6 @@ func _physics_process(delta):
 				move_towards_goal()
 	# If you do not already have a focus
 	else:
-			print("HAS NO FOCUS")
 			get_new_focus()
 			
 			# target the new focus
@@ -126,5 +124,4 @@ func _on_AttackTimer_timeout():
 	if is_focus_detected():
 		attack_animation.play("attack")
 		yield(attack_animation, "animation_finished")
-		focus.take_damage(attack_damage)
-		focus = null
+		focus = focus.take_damage(attack_damage)
