@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/particle/hit_particle.png" type="Texture" id=1]
+[ext_resource path="res://particle/hit_particle/hit_particle.tres" type="Material" id=2]
+[ext_resource path="res://particle/hit_particle/hit_particle.gd" type="Script" id=3]
+
+[node name="HitParticle" type="Particles2D"]
+emitting = false
+amount = 15
+lifetime = 0.5
+one_shot = true
+preprocess = 0.1
+explosiveness = 0.8
+process_material = ExtResource( 2 )
+texture = ExtResource( 1 )
+script = ExtResource( 3 )

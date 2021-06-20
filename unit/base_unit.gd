@@ -10,6 +10,7 @@ export (float) var move_speed = 50
 # Other
 var focus
 var _silenced
+var hit_particle = preload("res://particle/hit_particle/hit_particle.tscn")
 
 onready var health = max_health
 onready var detection_range = $DetectionRange
@@ -76,6 +77,9 @@ func take_damage(damage):
 	
 	white_blink.play("normal")
 	health -= damage
+	var hit_particles = hit_particle.instance()
+	hit_particles.global_position = global_position
+	get_tree().get_root().add_child(hit_particles)
 	if (health <= 0):
 		unit = null
 		die()
