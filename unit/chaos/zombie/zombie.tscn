@@ -1,32 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://unit/chaos/zombie/zombie.gd" type="Script" id=1]
-[ext_resource path="res://assets/chaos/zombie.png" type="Texture" id=2]
+[ext_resource path="res://unit/chaos/chaos_unit.tscn" type="PackedScene" id=1]
+[ext_resource path="res://unit/chaos/zombie/zombie.gd" type="Script" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 4 )
 
-[sub_resource type="CircleShape2D" id=2]
-radius = 35.5504
-
-[node name="Zombie" type="KinematicBody2D" groups=[
-"chaos",
+[node name="NewZombie" groups=[
 "zombie",
-]]
-position = Vector2( 109.531, 183.345 )
-script = ExtResource( 1 )
+] instance=ExtResource( 1 )]
+script = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
-
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 2 )
-
-[node name="AttackTimer" type="Timer" parent="."]
-
-[node name="DetectionRange" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
-shape = SubResource( 2 )
-
-[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
+[node name="AttackTimer" parent="." index="2"]
+one_shot = false
