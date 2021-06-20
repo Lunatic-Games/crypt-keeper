@@ -18,5 +18,4 @@ texture = ExtResource( 3 )
 one_shot = false
 
 [node name="HealthBar" parent="." index="7"]
-allow_greater = false
 percent_visible = true

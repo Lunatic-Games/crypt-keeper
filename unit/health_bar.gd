@@ -2,8 +2,6 @@ extends ProgressBar
 
 onready var health_tween = $HealthTween
 
-func _ready():
-	value = 99
 
 func update_health(current_health, max_health):
 	print("UPDATING HEALTH, is now: ", value)
