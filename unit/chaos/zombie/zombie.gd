@@ -1,8 +1,8 @@
 extends "res://unit/chaos/chaos_unit.gd"
 
 
-func _physics_process(delta):
-	if (selected):
+func _physics_process(_delta):
+	if (is_selected):
 		selected_ai()
 	else:
 		unselected_ai()
@@ -12,7 +12,7 @@ func selected_ai():
 	# Move towards player if selected
 	if (position.distance_to(Autovars.player.position) > follow_range):
 		var direction = position.direction_to(Autovars.player.position)
-		move_and_slide(direction * move_speed)
+		_silenced = move_and_slide(direction * move_speed)
 	
 	if (focus):
 		if is_focus_detected():
@@ -58,7 +58,7 @@ func move_and_attack():
 	# Move towards focus
 	if position.distance_to(focus.position) > preferred_focus_distance:
 		var direction = position.direction_to(focus.position)
-		move_and_slide(direction * move_speed)
+		_silenced = move_and_slide(direction * move_speed)
 	
 	# If focus in range, attack
 	if position.distance_to(focus.position) < preferred_focus_distance:
@@ -72,4 +72,8 @@ func ready_attack():
 
 func _on_AttackTimer_timeout():
 	if focus && is_focus_detected() && is_focus_in_range():
-		focus = focus.take_damage(attack_damage)
+		if ! attack_animation.is_playing():
+			attack_animation.play("attack")
+		yield(attack_animation, "animation_finished")
+		if focus:
+			focus = focus.take_damage(attack_damage)

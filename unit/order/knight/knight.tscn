@@ -4,11 +4,12 @@
 [ext_resource path="res://unit/order/knight/knight.gd" type="Script" id=2]
 [ext_resource path="res://assets/order/knight.png" type="Texture" id=3]
 
-
-[node name="NewKnight" groups=[
+[node name="Knight" groups=[
 "knight",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+attack_speed = 0.8
+health = 4.0
 
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource( 3 )

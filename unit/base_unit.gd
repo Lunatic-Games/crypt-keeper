@@ -9,10 +9,13 @@ export (float) var health = 1
 export (float) var move_speed = 50
 # Other
 var focus
+var _silenced
 
 
 onready var detection_range = $DetectionRange
 onready var attack_timer = $AttackTimer
+onready var attack_animation = $AttackAnimation
+onready var white_blink = $WhiteBlink
 
 
 func is_focus_detected():
@@ -43,6 +46,8 @@ func focus_in_preferred_range():
 
 func take_damage(damage):
 	var unit = self
+	
+	white_blink.play("normal")
 	health -= damage
 	if (health <= 0):
 		unit = null

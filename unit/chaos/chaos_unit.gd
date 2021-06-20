@@ -3,7 +3,7 @@ extends "res://unit/base_unit.gd"
 export (float) var follow_range = 30
 
 
-var selected = false
+var is_selected = false
 
 func get_new_focus():
 	randomize()
@@ -31,4 +31,4 @@ func get_detected_order():
 
 
 func selected():
-	selected = true
+	is_selected = true

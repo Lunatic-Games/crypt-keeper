@@ -2,10 +2,9 @@ extends "res://unit/order/order_unit.gd"
 
 onready var goal_target = Autovars.player
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# If you already have a focus
 	if (focus):
-		print("KNIGHT FOCUS")
 		# Check if the focus is still in the detection range
 		if is_focus_detected():
 			handle_focus()
@@ -20,7 +19,6 @@ func _physics_process(delta):
 				move_towards_goal()
 	# If you do not already have a focus
 	else:
-			print("KNIGHT UNFOCUS")
 			get_new_focus()
 			
 			# target the new focus
@@ -48,19 +46,22 @@ func move_to_preferred_focus_distance():
 	
 	if (closes_distance):
 		var direction = position.direction_to(focus.position)
-		move_and_slide(direction * move_speed)
+		_silenced = move_and_slide(direction * move_speed)
 	else:
 		var direction = - position.direction_to(focus.position)
-		move_and_slide(direction * move_speed)
+		_silenced = move_and_slide(direction * move_speed)
 
 
 func move_towards_goal():
 	var direction = position.direction_to(goal_target.position)
-	move_and_slide(direction * move_speed)
+	_silenced =  move_and_slide(direction * move_speed)
 
 
 func _on_AttackTimer_timeout():
-	
 	# if the focus is in range, do damage
 	if focus && is_focus_detected():
-		focus = focus.take_damage(attack_damage)
+		if ! attack_animation.is_playing():
+			attack_animation.play("attack")
+		yield(attack_animation, "animation_finished")
+		if (focus):
+			focus = focus.take_damage(attack_damage)
