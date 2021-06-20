@@ -25,5 +25,6 @@ func handle_select(delta):
 		$SelectArea.visible = true
 		$SelectArea.increase(delta)
 	if Input.is_action_just_released("select"):
+		$SelectArea.select_chaos_units()
 		$SelectArea.visible = false
 		$SelectArea.reset()

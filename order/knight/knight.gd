@@ -5,14 +5,14 @@ var preferred_focus_distance = 12
 var closes_distance = true
 var attack_rate = 2
 var attack_damage = 1
-var health = 4
+var health = 1
 var move_speed = 50
 
 
 onready var detection_range = $DetectionRange
 onready var attack_timer = $AttackTimer
 onready var attack_animation = $AttackAnimation
-onready var goal_target = get_tree().get_nodes_in_group("player")[0]
+onready var goal_target = Autovars.player
 onready var focus = null
 
 func _physics_process(delta):
@@ -121,7 +121,21 @@ func move_towards_goal():
 func _on_AttackTimer_timeout():
 	
 	# if the focus is in range, do damage
-	if is_focus_detected():
+	if focus && is_focus_detected():
 		attack_animation.play("attack")
 		yield(attack_animation, "animation_finished")
 		focus = focus.take_damage(attack_damage)
+
+
+func take_damage(damage):
+	var unit = self
+	health -= damage
+	if (health <= 0):
+		unit = null
+		die()
+	
+	return unit
+
+
+func die():
+	call_deferred('free')

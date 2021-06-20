@@ -25,3 +25,11 @@ func increase(delta):
 
 func reset():
 	radius = MIN_RADIUS
+
+
+func select_chaos_units():
+	var bodies = get_overlapping_bodies()
+	
+	for body in bodies:
+		if body.is_in_group("chaos"):
+			body.selected()
