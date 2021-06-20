@@ -1,9 +1,15 @@
 extends KinematicBody2D
 
-const SPEED = 150
+const MAX_SPEED = 150
+const ACCELERATION_WEIGHT = 0.5
+
+
+var velocity: Vector2
 
 
 func _physics_process(delta):
+	handle_select(delta)
+	
 	var movement = Vector2()
 	if Input.is_action_pressed("move_up"):
 		movement.y -= 1
@@ -13,11 +19,12 @@ func _physics_process(delta):
 		movement.y += 1
 	if Input.is_action_pressed("move_left"):
 		movement.x -= 1
-	movement = movement.normalized() * SPEED
 	
-	handle_select(delta)
+	var target_velocity = movement.normalized() * MAX_SPEED
+	velocity.x = lerp(velocity.x, target_velocity.x, ACCELERATION_WEIGHT)
+	velocity.y = lerp(velocity.y, target_velocity.y, ACCELERATION_WEIGHT)
 		
-	var _ret =  move_and_slide(movement)
+	velocity =  move_and_slide(velocity)
 
 
 func handle_select(delta):
