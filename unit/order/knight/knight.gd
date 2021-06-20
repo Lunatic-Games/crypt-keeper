@@ -1,19 +1,7 @@
 extends KinematicBody2D
 
-# Stats
-var preferred_focus_distance = 12
-var closes_distance = true
-var attack_rate = 2
-var attack_damage = 1
-var health = 1
-var move_speed = 50
-
-
-onready var detection_range = $DetectionRange
-onready var attack_timer = $AttackTimer
 onready var attack_animation = $AttackAnimation
 onready var goal_target = Autovars.player
-onready var focus = null
 
 func _physics_process(delta):
 	
@@ -42,25 +30,6 @@ func _physics_process(delta):
 			else:
 				move_towards_goal()
 
-
-
-
-# Gets all chaos in the detection range
-func get_detected_chaos():
-	var chaos = []
-	var bodies = detection_range.get_overlapping_bodies()
-	
-	for body in bodies:
-		if body.is_in_group("chaos"):
-			chaos.push_back(body)
-	
-	return chaos
-
-
-func is_focus_detected():
-	return detection_range.overlaps_body(focus)
-
-
 # Overwritten per scene
 func handle_focus():
 	
@@ -73,34 +42,6 @@ func handle_focus():
 	else:
 		# Move to correct the preferred focus
 		move_to_preferred_focus_distance()
-		
-
-func get_new_focus():
-	randomize()
-	var chaos = get_detected_chaos()
-	chaos.shuffle()
-	
-	if (chaos && chaos.size() >= 1):
-		focus = chaos[0]
-		return chaos[0]
-	else:
-		focus = null
-		return null
-
-
-func focus_in_preferred():
-	# If the unit is melee
-	if (closes_distance):
-		if (position.distance_to(focus.position) > preferred_focus_distance):
-			return false
-		else:
-			return true
-	# If the unit is ranged
-	else:
-		if (position.distance_to(focus.position) < preferred_focus_distance):
-			return false
-		else:
-			return true
 
 
 func move_to_preferred_focus_distance():
@@ -125,17 +66,3 @@ func _on_AttackTimer_timeout():
 		attack_animation.play("attack")
 		yield(attack_animation, "animation_finished")
 		focus = focus.take_damage(attack_damage)
-
-
-func take_damage(damage):
-	var unit = self
-	health -= damage
-	if (health <= 0):
-		unit = null
-		die()
-	
-	return unit
-
-
-func die():
-	call_deferred('free')
