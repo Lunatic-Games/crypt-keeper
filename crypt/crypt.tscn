@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://unit/chaos/zombie/zombie.tscn" type="PackedScene" id=2]
-[ext_resource path="res://unit/order/knight/knight.tscn" type="PackedScene" id=3]
+[ext_resource path="res://unit/order/new_knight/new_knight.tscn" type="PackedScene" id=2]
+[ext_resource path="res://unit/chaos/zombie/new_zombie.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/light/door_light.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -32,10 +32,11 @@ texture = ExtResource( 4 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 360, 180 )
 
-[node name="Zombie" parent="." instance=ExtResource( 2 )]
+[node name="NewKnight" parent="." instance=ExtResource( 2 )]
+position = Vector2( 49.7825, 44.9494 )
 
-[node name="Knight" parent="." instance=ExtResource( 3 )]
-position = Vector2( 37.4199, 35.3176 )
+[node name="NewZombie" parent="." instance=ExtResource( 3 )]
+position = Vector2( 144.535, 97.2754 )
 
 [node name="Walls" type="Node2D" parent="."]
 

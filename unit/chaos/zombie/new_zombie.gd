@@ -1,6 +1,5 @@
-extends KinematicBody2D
+extends "res://unit/chaos/chaos_unit.gd"
 
-var selected = false
 
 func _physics_process(delta):
 	if (selected):
@@ -57,12 +56,12 @@ func unselected_ai():
 func move_and_attack():
 	
 	# Move towards focus
-	if position.distance_to(focus.position) > preferred_focus_range:
+	if position.distance_to(focus.position) > preferred_focus_distance:
 		var direction = position.direction_to(focus.position)
 		move_and_slide(direction * move_speed)
 	
 	# If focus in range, attack
-	if position.distance_to(focus.position) < preferred_focus_range:
+	if position.distance_to(focus.position) < preferred_focus_distance:
 		ready_attack()
 
 func ready_attack():

@@ -1,12 +1,11 @@
-extends KinematicBody2D
+extends "res://unit/order/order_unit.gd"
 
-onready var attack_animation = $AttackAnimation
 onready var goal_target = Autovars.player
 
 func _physics_process(delta):
-	
 	# If you already have a focus
 	if (focus):
+		print("KNIGHT FOCUS")
 		# Check if the focus is still in the detection range
 		if is_focus_detected():
 			handle_focus()
@@ -21,6 +20,7 @@ func _physics_process(delta):
 				move_towards_goal()
 	# If you do not already have a focus
 	else:
+			print("KNIGHT UNFOCUS")
 			get_new_focus()
 			
 			# target the new focus
@@ -34,10 +34,10 @@ func _physics_process(delta):
 func handle_focus():
 	
 	# If the focus is within the preferred range
-	if focus_in_preferred():
+	if focus_in_preferred_range():
 		# Ready an attack
 		if attack_timer.is_stopped():
-			attack_timer.start(attack_rate)
+			attack_timer.start(attack_speed)
 		pass
 	else:
 		# Move to correct the preferred focus
@@ -63,6 +63,4 @@ func _on_AttackTimer_timeout():
 	
 	# if the focus is in range, do damage
 	if focus && is_focus_detected():
-		attack_animation.play("attack")
-		yield(attack_animation, "animation_finished")
 		focus = focus.take_damage(attack_damage)
