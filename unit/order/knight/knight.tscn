@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/order/knight.png" type="Texture" id=1]
-[ext_resource path="res://order/knight/knight.gd" type="Script" id=2]
+[ext_resource path="res://unit/order/knight/knight.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 3.77487
