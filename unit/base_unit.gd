@@ -11,6 +11,7 @@ export (float) var move_speed = 50
 var focus
 var _silenced
 var hit_particle = preload("res://particle/hit_particle/hit_particle.tscn")
+var whiten_material = preload("res://shaders/whiten.tres")
 
 onready var health = max_health
 onready var detection_range = $DetectionRange
@@ -24,6 +25,8 @@ onready var health_bar = $HealthBar
 
 signal hit_frame
 
+func make_material_unique():
+	sprite.material = whiten_material.duplicate()
 
 func is_focus_detected():
 	return detection_range.overlaps_body(focus)
@@ -68,7 +71,7 @@ func attack_tween_at_focus():
 func draw_focus_line():
 	if (focus):
 		var target = global_position.direction_to(focus.global_position) * global_position.distance_to(focus.global_position)
-		draw_line(Vector2(0,0), target, Color(0.8, 0.3, 0, 0.4), 1.6)
+		draw_line(Vector2(0,0), target, Color(0.8, 0.3, 0, 0.2), 1.6)
 	else:
 		pass
 

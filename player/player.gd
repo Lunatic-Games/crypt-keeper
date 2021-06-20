@@ -2,9 +2,15 @@ extends KinematicBody2D
 
 const MAX_SPEED = 150
 const ACCELERATION_WEIGHT = 0.5
+const pressed_interval = 0.2
 
 
 var velocity: Vector2
+var press_count = 0
+var performing_action = ""
+var selected_units = []
+
+onready var pressed_timer = $PressedTimer
 
 
 func _physics_process(delta):
@@ -28,10 +34,36 @@ func _physics_process(delta):
 
 
 func handle_select(delta):
-	if Input.is_action_pressed("select"):
+	# Handle if an action is pressed or held
+	if (Input.is_action_just_pressed("select")):
+		performing_action = "pressed"
+		pressed_timer.start(pressed_interval)
+	
+	# Take the release action
+	if (Input.is_action_just_released("select")):
+		take_action()
+	
+	# Increase circle if held
+	if performing_action == "held":
 		$SelectArea.visible = true
 		$SelectArea.increase(delta)
-	if Input.is_action_just_released("select"):
-		$SelectArea.select_chaos_units()
+
+
+func take_action():
+	if performing_action == "held":
+		selected_units += $SelectArea.select_chaos_units()
 		$SelectArea.visible = false
 		$SelectArea.reset()
+	
+	if performing_action == "pressed":
+		if selected_units.size() >= 1:
+			print("ORDER UNITS")
+		else:
+			print("Attempt to get units")
+	
+	performing_action = ""
+
+
+func _on_PressedTimer_timeout():
+	if performing_action == "pressed":
+		performing_action = "held"

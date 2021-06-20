@@ -2,7 +2,7 @@ extends Area2D
 
 const MIN_RADIUS = 5.0
 const MAX_RADIUS = 100.0
-const INCREASE_SPEED = 40.0
+const INCREASE_SPEED = 70.0
 const CIRCLE_POINT_COUNT = 400
 const OUTLINE_WIDTH = 2.0
 
@@ -29,7 +29,11 @@ func reset():
 
 func select_chaos_units():
 	var bodies = get_overlapping_bodies()
+	var selected_units = []
 	
 	for body in bodies:
-		if body.is_in_group("chaos"):
+		if body.is_in_group("chaos") && ! body.is_selected:
 			body.selected()
+			selected_units.push_back(body)
+	
+	return selected_units

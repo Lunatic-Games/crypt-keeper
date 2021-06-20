@@ -1,11 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/select_area.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/player/necromancer.png" type="Texture" id=3]
+[ext_resource path="res://player/base_attack_manager.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5, 5 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 100.0
 
 [node name="Player" type="KinematicBody2D" groups=[
 "player",
@@ -20,3 +24,22 @@ texture = ExtResource( 3 )
 
 [node name="SelectArea" parent="." instance=ExtResource( 2 )]
 visible = false
+
+[node name="BaseAttackManager" type="Node2D" parent="."]
+script = ExtResource( 4 )
+radius = 80.0
+
+[node name="BaseAttackRange" type="Area2D" parent="BaseAttackManager"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BaseAttackManager/BaseAttackRange"]
+shape = SubResource( 2 )
+
+[node name="BaseAttackTimer" type="Timer" parent="BaseAttackManager"]
+wait_time = 1.8
+autostart = true
+
+[node name="PressedTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="BaseAttackManager/BaseAttackTimer" to="BaseAttackManager" method="_on_BaseAttackTimer_timeout"]
+[connection signal="timeout" from="PressedTimer" to="." method="_on_PressedTimer_timeout"]

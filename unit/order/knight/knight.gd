@@ -2,6 +2,9 @@ extends "res://unit/order/order_unit.gd"
 
 onready var goal_target = Autovars.player
 
+func _ready():
+	make_material_unique()
+
 func _process(_delta):
 	update()
 

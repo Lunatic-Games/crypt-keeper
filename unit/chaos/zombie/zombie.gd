@@ -1,6 +1,10 @@
 extends "res://unit/chaos/chaos_unit.gd"
 
 
+func _ready():
+	make_material_unique()
+
+
 func _physics_process(_delta):
 	if (is_selected):
 		selected_ai()
