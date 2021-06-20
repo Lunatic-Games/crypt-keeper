@@ -2,6 +2,9 @@ extends "res://unit/order/order_unit.gd"
 
 onready var goal_target = Autovars.player
 
+func _process(_delta):
+	update()
+
 func _physics_process(_delta):
 	# If you already have a focus
 	if (focus):
@@ -28,9 +31,12 @@ func _physics_process(_delta):
 			else:
 				move_towards_goal()
 
+
+func _draw():
+	draw_focus_line()
+
 # Overwritten per scene
 func handle_focus():
-	
 	# If the focus is within the preferred range
 	if focus_in_preferred_range():
 		# Ready an attack
@@ -59,9 +65,9 @@ func move_towards_goal():
 
 func _on_AttackTimer_timeout():
 	# if the focus is in range, do damage
-	if focus && is_focus_detected():
-		if ! attack_animation.is_playing():
-			attack_animation.play("attack")
-		yield(attack_animation, "animation_finished")
+	if focus && is_focus_detected()  && is_focus_in_range():
+		attack_tween_at_focus()
+		attack_animation.play("attack")
+		yield(self, "hit_frame")
 		if (focus):
 			focus = focus.take_damage(attack_damage)

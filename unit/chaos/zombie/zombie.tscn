@@ -8,8 +8,12 @@
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 attack_speed = 1.2
-health = 3.0
+max_health = 5.0
 move_speed = 30.0
 
 [node name="AttackTimer" parent="." index="2"]
 one_shot = false
+
+[node name="HealthBar" parent="." index="7"]
+allow_greater = false
+percent_visible = true

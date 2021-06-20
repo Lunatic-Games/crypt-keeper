@@ -5,17 +5,23 @@ export (float) var preferred_focus_distance = 12
 export (bool) var closes_distance = true
 export (float) var attack_speed = 2
 export (float) var attack_damage = 1
-export (float) var health = 1
+export (float) var max_health = 1
 export (float) var move_speed = 50
 # Other
 var focus
 var _silenced
 
-
+onready var health = max_health
 onready var detection_range = $DetectionRange
 onready var attack_timer = $AttackTimer
 onready var attack_animation = $AttackAnimation
 onready var white_blink = $WhiteBlink
+onready var attack_tween = $AttackTween
+onready var sprite = $Sprite
+onready var health_bar = $HealthBar
+
+
+signal hit_frame
 
 
 func is_focus_detected():
@@ -43,6 +49,27 @@ func focus_in_preferred_range():
 		else:
 			return true
 
+func attack_tween_at_focus():
+	if (focus):
+		var direction = global_position.direction_to(focus.global_position)
+		var distance = global_position.distance_to(focus.global_position)
+		
+		attack_tween.interpolate_property($Sprite, "position", 
+											Vector2(0,0), direction * distance, 0.12, 
+											Tween.TRANS_ELASTIC, Tween.EASE_IN)
+		attack_tween.interpolate_property($Sprite, "position", 
+											direction * distance, Vector2(0,0), 0.12, 
+											Tween.TRANS_EXPO, Tween.EASE_OUT)
+
+		attack_tween.start()
+
+
+func draw_focus_line():
+	if (focus):
+		var target = global_position.direction_to(focus.global_position) * global_position.distance_to(focus.global_position)
+		draw_line(Vector2(0,0), target, Color(0.8, 0.3, 0, 0.4), 1.6)
+	else:
+		pass
 
 func take_damage(damage):
 	var unit = self
@@ -52,9 +79,15 @@ func take_damage(damage):
 	if (health <= 0):
 		unit = null
 		die()
+	else:
+		health_bar.update_health(health, max_health)
 	
 	return unit
 
 
 func die():
 	call_deferred('free')
+
+
+func hit_signal():
+	emit_signal("hit_frame")

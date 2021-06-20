@@ -36,7 +36,7 @@ position = Vector2( 360, 180 )
 position = Vector2( 49.7825, 44.9494 )
 
 [node name="Zombie" parent="." instance=ExtResource( 3 )]
-position = Vector2( 144.535, 97.2754 )
+position = Vector2( 144.535, 91.6185 )
 
 [node name="Walls" type="Node2D" parent="."]
 

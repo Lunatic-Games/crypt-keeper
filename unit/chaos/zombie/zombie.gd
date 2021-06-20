@@ -72,8 +72,9 @@ func ready_attack():
 
 func _on_AttackTimer_timeout():
 	if focus && is_focus_detected() && is_focus_in_range():
-		if ! attack_animation.is_playing():
-			attack_animation.play("attack")
-		yield(attack_animation, "animation_finished")
-		if focus:
+		attack_tween_at_focus()
+		attack_animation.play("attack")
+		yield(self, "hit_frame")
+		if (focus):
 			focus = focus.take_damage(attack_damage)
+
