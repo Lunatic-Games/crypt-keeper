@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://crypt/waves/WAVE.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+knights = 5
+min_group_size = 1
+max_group_size = 2
+time_between_groups = 5.0
