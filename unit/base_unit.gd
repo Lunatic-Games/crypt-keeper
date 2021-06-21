@@ -29,7 +29,10 @@ func make_material_unique():
 	sprite.material = whiten_material.duplicate()
 
 func is_focus_detected():
-	return detection_range.overlaps_body(focus)
+	if (focus):
+		return detection_range.overlaps_body(focus)
+	else:
+		return null
 
 
 func is_focus_in_range():

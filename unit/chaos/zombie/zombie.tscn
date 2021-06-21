@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://unit/chaos/chaos_unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://unit/chaos/zombie/zombie.gd" type="Script" id=2]
+[ext_resource path="res://assets/particle/zombie_wander_particle.png" type="Texture" id=3]
+[ext_resource path="res://unit/chaos/zombie/wander_particle.tres" type="Material" id=4]
 
 [node name="Zombie" groups=[
 "zombie",
@@ -11,8 +13,16 @@ attack_speed = 1.2
 max_health = 5.0
 move_speed = 30.0
 
-[node name="AttackTimer" parent="." index="2"]
+[node name="Wandering" type="Particles2D" parent="." index="0"]
+modulate = Color( 1, 1, 1, 0.388235 )
+emitting = false
+amount = 2
+lifetime = 1.5
+process_material = ExtResource( 4 )
+texture = ExtResource( 3 )
+
+[node name="AttackTimer" parent="." index="3"]
 one_shot = false
 
-[node name="HealthBar" parent="." index="7"]
+[node name="HealthBar" parent="." index="8"]
 percent_visible = true

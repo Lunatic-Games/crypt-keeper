@@ -4,6 +4,9 @@ export (float) var follow_range = 30
 
 
 var is_selected = false
+var holding
+var units_in_hold
+var reached_hold = false
 
 func get_new_focus():
 	randomize()
@@ -32,3 +35,11 @@ func get_detected_order():
 
 func selected():
 	is_selected = true
+	holding = null
+	units_in_hold = 0
+
+func command_hold(hold_pos, number_of_units):
+	is_selected = false
+	holding = hold_pos
+	units_in_hold = number_of_units
+	reached_hold = false

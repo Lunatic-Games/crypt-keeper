@@ -9,6 +9,7 @@ var velocity: Vector2
 var press_count = 0
 var performing_action = ""
 var selected_units = []
+var command_flag = preload("res://player/command_flag.tscn")
 
 onready var pressed_timer = $PressedTimer
 
@@ -57,11 +58,19 @@ func take_action():
 	
 	if performing_action == "pressed":
 		if selected_units.size() >= 1:
-			print("ORDER UNITS")
+			command_selected_to_hold()
 		else:
 			print("Attempt to get units")
 	
 	performing_action = ""
+
+func command_selected_to_hold():
+	var flag = command_flag.instance()
+	flag.global_position = global_position
+	get_tree().get_root().add_child(flag)
+	
+	for unit in selected_units:
+		unit.command_hold(global_position, selected_units.size())
 
 
 func _on_PressedTimer_timeout():

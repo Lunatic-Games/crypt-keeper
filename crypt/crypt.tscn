@@ -37,6 +37,7 @@ position = Vector2( 49.7825, 44.9494 )
 
 [node name="Zombie" parent="." instance=ExtResource( 3 )]
 position = Vector2( 228.531, 142.345 )
+z_index = 2
 
 [node name="Walls" type="Node2D" parent="."]
 
@@ -66,21 +67,12 @@ shape = SubResource( 2 )
 
 [node name="Zombie2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 152.023, 195.312 )
+z_index = 2
 
 [node name="Zombie3" parent="." instance=ExtResource( 3 )]
 position = Vector2( 180.371, 200.982 )
+z_index = 2
 
 [node name="Zombie4" parent="." instance=ExtResource( 3 )]
 position = Vector2( 178.481, 176.413 )
-
-[node name="Knight2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 14.0616, 172.004 )
-
-[node name="Knight3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 20.3612, 266.498 )
-
-[node name="Knight4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 6.50211, 326.974 )
-
-[node name="Knight5" parent="." instance=ExtResource( 2 )]
-position = Vector2( 620.084, 166.334 )
+z_index = 2

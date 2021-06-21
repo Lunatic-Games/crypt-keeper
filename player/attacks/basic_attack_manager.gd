@@ -5,7 +5,7 @@ export (float) var attack_time = 1.8
 export (float) var attack_warning_time = 1
 export (float) var attack_warning_opacity = 0.1
 
-var base_attack_scene = preload("res://player/basic_attack.tscn")
+var base_attack_scene = preload("res://player/attacks/basic_attack.tscn")
 
 onready var attack_range_area = $BaseAttackRange
 onready var attack_timer = $BaseAttackTimer
