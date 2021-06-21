@@ -81,3 +81,25 @@ func command_selected_to_hold():
 func _on_PressedTimer_timeout():
 	if performing_action == "pressed":
 		performing_action = "held"
+
+
+func take_damage(damage):
+	var unit = self
+	
+	#white_blink.play("normal")
+	#health -= damage
+	#var hit_particles = hit_particle.instance()
+	#hit_particles.global_position = global_position
+	#get_tree().get_root().add_child(hit_particles)
+	#if (health <= 0):
+	#	unit = null
+	#	die()
+	#else:
+	#	health_bar.update_health(health, max_health)
+	
+	#return unit
+	pass
+
+
+func die():
+	call_deferred('free')
