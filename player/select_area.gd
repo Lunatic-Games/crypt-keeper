@@ -23,6 +23,13 @@ func increase(delta):
 	update()
 
 
+func instant_select():
+	radius = MAX_RADIUS
+	$CollisionShape2D.shape.radius = radius
+	
+	return select_chaos_units()
+
+
 func reset():
 	radius = MIN_RADIUS
 

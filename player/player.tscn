@@ -28,6 +28,7 @@ visible = false
 [node name="BaseAttackManager" type="Node2D" parent="."]
 script = ExtResource( 4 )
 radius = 80.0
+attack_time = 1.4
 
 [node name="BaseAttackRange" type="Area2D" parent="BaseAttackManager"]
 

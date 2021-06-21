@@ -60,7 +60,9 @@ func take_action():
 		if selected_units.size() >= 1:
 			command_selected_to_hold()
 		else:
-			print("Attempt to get units")
+			selected_units = $SelectArea.instant_select()
+			$SelectArea.reset()
+			command_selected_to_hold()
 	
 	performing_action = ""
 
@@ -70,7 +72,10 @@ func command_selected_to_hold():
 	get_tree().get_root().add_child(flag)
 	
 	for unit in selected_units:
-		unit.command_hold(global_position, selected_units.size())
+		if (unit):
+			unit.command_hold(global_position, selected_units.size())
+	
+	selected_units = []
 
 
 func _on_PressedTimer_timeout():
