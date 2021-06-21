@@ -21,6 +21,7 @@ func _physics_process(_delta):
 func selected_ai():
 	if wandering.emitting:
 		wandering.emitting = false
+		wandering.restart()
 	
 	# Move towards player if selected
 	if (position.distance_to(Autovars.player.position) > follow_range):

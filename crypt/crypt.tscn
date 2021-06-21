@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://unit/order/knight/knight.tscn" type="PackedScene" id=2]
+[ext_resource path="res://crypt/spawner/spawner.tscn" type="PackedScene" id=2]
 [ext_resource path="res://unit/chaos/zombie/zombie.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/light/door_light.png" type="Texture" id=4]
+[ext_resource path="res://crypt/crypt.gd" type="Script" id=5]
+[ext_resource path="res://crypt/waves/wave_1.tres" type="Resource" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 180 )
@@ -12,6 +13,8 @@ extents = Vector2( 10, 180 )
 extents = Vector2( 340, 10 )
 
 [node name="Crypt" type="Node2D"]
+script = ExtResource( 5 )
+current_wave = ExtResource( 6 )
 
 [node name="Background" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -24,19 +27,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EnemySpawner" type="Sprite" parent="."]
-self_modulate = Color( 1, 1, 1, 0.145098 )
-position = Vector2( 16, 188 )
-texture = ExtResource( 4 )
+[node name="Spawners" type="Node2D" parent="."]
+
+[node name="EnemySpawner" parent="Spawners" instance=ExtResource( 2 )]
+position = Vector2( 16, 180 )
+
+[node name="EnemySpawner2" parent="Spawners" instance=ExtResource( 2 )]
+position = Vector2( 320, 16 )
+rotation = 1.57079
+
+[node name="EnemySpawner3" parent="Spawners" instance=ExtResource( 2 )]
+position = Vector2( 624, 180 )
+rotation = 3.14159
+
+[node name="EnemySpawner4" parent="Spawners" instance=ExtResource( 2 )]
+position = Vector2( 320, 344 )
+rotation = -1.5708
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 360, 180 )
 
-[node name="Knight" parent="." instance=ExtResource( 2 )]
-position = Vector2( 49.7825, 44.9494 )
-
 [node name="Zombie" parent="." instance=ExtResource( 3 )]
 position = Vector2( 228.531, 142.345 )
+z_index = 2
 
 [node name="Walls" type="Node2D" parent="."]
 
@@ -66,9 +79,12 @@ shape = SubResource( 2 )
 
 [node name="Zombie2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 152.023, 195.312 )
+z_index = 2
 
 [node name="Zombie3" parent="." instance=ExtResource( 3 )]
 position = Vector2( 180.371, 200.982 )
+z_index = 2
 
 [node name="Zombie4" parent="." instance=ExtResource( 3 )]
 position = Vector2( 178.481, 176.413 )
+z_index = 2
