@@ -29,7 +29,7 @@ func make_material_unique():
 	sprite.material = whiten_material.duplicate()
 
 func is_focus_detected():
-	if (focus):
+	if (focus && is_instance_valid(focus)):
 		return detection_range.overlaps_body(focus)
 	else:
 		return null
@@ -56,6 +56,7 @@ func focus_in_preferred_range():
 		else:
 			return true
 
+
 func attack_tween_at_focus():
 	if (focus):
 		var direction = global_position.direction_to(focus.global_position)
@@ -67,7 +68,6 @@ func attack_tween_at_focus():
 		attack_tween.interpolate_property($Sprite, "position", 
 											direction * distance, Vector2(0,0), 0.12, 
 											Tween.TRANS_EXPO, Tween.EASE_OUT)
-
 		attack_tween.start()
 
 
@@ -77,6 +77,7 @@ func draw_focus_line():
 		draw_line(Vector2(0,0), target, Color(0.8, 0.3, 0, 0.2), 1.6)
 	else:
 		pass
+
 
 func take_damage(damage):
 	var unit = self

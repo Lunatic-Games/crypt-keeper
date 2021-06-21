@@ -1,5 +1,9 @@
 extends Node2D
 
+
+const CIRCLE_POINT_COUNT = 400
+const OUTLINE_WIDTH = 4.0
+
 export (float) var radius
 export (float) var attack_time = 1.8
 export (float) var attack_warning_time = 1
@@ -31,8 +35,11 @@ func set_attack_radius():
 func draw_range():
 	var opacity = calculate_ability_opacity()
 	var color = Color("b287c7")
+	var outline_color = Color("7b2ca3")
 	color.a = opacity
+	outline_color.a = opacity * 2
 	draw_circle(Vector2(0,0), radius, color)
+	draw_arc(Vector2(), radius, 0, 2*PI, CIRCLE_POINT_COUNT, outline_color, OUTLINE_WIDTH)
 
 
 func calculate_ability_opacity():
