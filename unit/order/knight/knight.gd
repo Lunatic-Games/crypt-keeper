@@ -45,6 +45,8 @@ func move_to_preferred_focus_distance():
 	
 	if (closes_distance):
 		var direction = position.direction_to(focus.position)
+		direction += calculate_avoidance_direction_offset(direction) * 6
+		direction = direction.normalized()
 		_silenced = move_and_slide(direction * move_speed)
 	else:
 		var direction = - position.direction_to(focus.position)
@@ -55,24 +57,24 @@ func move_towards_goal():
 	if (goal_target && is_instance_valid(goal_target)):
 		var direction = position.direction_to(goal_target.position)
 		direction += calculate_avoidance_direction_offset(direction)
-		direction.normalized()
+		direction = direction.normalized()
 		_silenced =  move_and_slide(direction * move_speed)
 
 
 func calculate_avoidance_direction_offset(direction):
-	var angle_of_direction = global_position.angle_to(direction)
+	var angle_of_direction = direction.angle()
 	var bodies = ally_avoidance_area.get_overlapping_bodies()
 	var allies_in_direction = []
 	for body in bodies:
 		var angle_to_body = global_position.angle_to_point(body.global_position)
-		var is_in_direction = (angle_of_direction + 30 >= angle_to_body) or (angle_of_direction - 30 <= angle_to_body)
+		var is_in_direction = (angle_of_direction + PI/6 >= angle_to_body) or (angle_of_direction - PI/6 <= angle_to_body)
 		if body.is_in_group("order") && is_in_direction && body != self:
 			allies_in_direction.push_back(body)
 	
 	if (allies_in_direction.size() == 0):
 		return Vector2(0,0)
 	else:
-		return Vector2(cos(angle_of_direction  + 90), sin(angle_of_direction + 90))
+		return Vector2(cos(angle_of_direction  + PI/2), sin(angle_of_direction + PI/2))
 	
 
 func _on_AttackTimer_timeout():
