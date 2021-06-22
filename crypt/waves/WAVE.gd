@@ -11,10 +11,12 @@ const UNITS = {
 
 var unit_queue = []
 
+
 func create_queue():
 	for unit in UNITS:
 		for number in get(unit):
 			unit_queue.append(UNITS[unit])
+
 
 func get_next_in_queue():
 	unit_queue.shuffle()

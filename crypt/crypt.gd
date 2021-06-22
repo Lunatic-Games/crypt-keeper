@@ -29,7 +29,8 @@ func spawn_waves():
 		current_wave.create_queue()
 		yield(spawn_current_wave(), "completed")
 		yield(self, "wave_cleared")
-		yield(get_tree().create_timer(DELAY_BETWEEN_WAVES), "timeout")
+		if get_tree():
+			yield(get_tree().create_timer(DELAY_BETWEEN_WAVES), "timeout")
 		if waves:
 			wave_n += 1
 			update_wave_hud()
@@ -40,7 +41,8 @@ func spawn_current_wave():
 		var enemies = current_wave.get_next_in_queue()
 		var spawner = spawners[randi() % spawners.size()]
 		yield(spawn_group(enemies, spawner), "completed")
-		yield(get_tree().create_timer(DELAY_BETWEEN_GROUPS), "timeout")
+		if get_tree():
+			yield(get_tree().create_timer(DELAY_BETWEEN_GROUPS), "timeout")
 
 
 func spawn_group(group, spawner):
@@ -48,7 +50,8 @@ func spawn_group(group, spawner):
 		add_child(enemy)
 		enemy.connect("tree_exited", self, "check_enemies_cleared")
 		enemy.global_position = spawner.global_position
-		yield(get_tree().create_timer(DELAY_BETWEEN_ENEMIES), "timeout")
+		if get_tree():
+			yield(get_tree().create_timer(DELAY_BETWEEN_ENEMIES), "timeout")
 
 
 func update_wave_hud():

@@ -74,6 +74,7 @@ func hold_ai():
 func move_and_attack():
 	if wandering.emitting:
 		wandering.emitting = false
+		wandering.restart()
 	
 	# Move towards focus
 	if position.distance_to(focus.position) > preferred_focus_distance:
@@ -87,6 +88,7 @@ func move_and_attack():
 func move_to_hold_and_attack():
 	if wandering.emitting:
 		wandering.emitting = false
+		wandering.restart()
 	
 	# Move towards hold
 	if position.distance_to(holding) > preferred_focus_distance:
