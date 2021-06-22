@@ -2,11 +2,13 @@ extends KinematicBody2D
 
 const MAX_SPEED = 150
 const ACCELERATION_WEIGHT = 0.5
-const pressed_interval = 0.2
+const pressed_interval = 0.1
 
 
 var velocity: Vector2
 var press_count = 0
+var time_held = 0
+var coyote_hold = 0.2
 var performing_action = ""
 var selected_units = []
 var command_flag = preload("res://player/command_flag.tscn")
@@ -53,15 +55,20 @@ func handle_select(delta):
 	
 	# Increase circle if held
 	if performing_action == "held":
+		time_held += delta
 		$SelectArea.visible = true
 		$SelectArea.increase(delta)
 
 
 func take_action():
 	if performing_action == "held":
-		selected_units += $SelectArea.select_chaos_units()
+		var new_selections = $SelectArea.select_chaos_units()
+		selected_units += new_selections
 		$SelectArea.visible = false
 		$SelectArea.reset()
+		if (new_selections.size() == 0 && time_held <= pressed_interval + coyote_hold):
+			performing_action = "pressed"
+		time_held = 0
 	
 	if performing_action == "pressed":
 		if selected_units.size() >= 1:
@@ -79,7 +86,7 @@ func command_selected_to_hold():
 	get_tree().get_root().add_child(flag)
 	
 	for unit in selected_units:
-		if (unit):
+		if (unit && is_instance_valid(unit)):
 			unit.command_hold(global_position, selected_units.size())
 	
 	selected_units = []
