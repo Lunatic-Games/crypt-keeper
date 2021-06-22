@@ -15,6 +15,7 @@ var whiten_material = preload("res://shaders/whiten.tres")
 
 onready var health = max_health
 onready var detection_range = $DetectionRange
+onready var ally_avoidance_area = $AllyAvoidanceArea
 onready var attack_timer = $AttackTimer
 onready var attack_animation = $AttackAnimation
 onready var white_blink = $WhiteBlink

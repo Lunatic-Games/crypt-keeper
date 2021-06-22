@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/chaos/zombie.png" type="Texture" id=1]
 [ext_resource path="res://unit/base_unit.gd" type="Script" id=2]
@@ -94,8 +94,10 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
+[sub_resource type="CircleShape2D" id=9]
+radius = 10.6669
+
 [node name="BaseUnit" type="KinematicBody2D"]
-position = Vector2( 109.531, 183.345 )
 z_index = 2
 script = ExtResource( 2 )
 
@@ -151,6 +153,11 @@ anims/out = SubResource( 8 )
 
 [node name="FadeDelay" type="Timer" parent="HealthBar"]
 one_shot = true
+
+[node name="AllyAvoidanceArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AllyAvoidanceArea"]
+shape = SubResource( 9 )
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
 [connection signal="timeout" from="HealthBar/FadeDelay" to="HealthBar" method="_on_FadeDelay_timeout"]

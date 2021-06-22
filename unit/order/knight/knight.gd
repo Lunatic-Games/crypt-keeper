@@ -9,30 +9,20 @@ func _process(_delta):
 	update()
 
 func _physics_process(_delta):
-	# If you already have a focus
+	
+	# If you do not have focus, try and get it
+	if !focus:
+		get_new_focus()
+	
+	if focus && !is_focus_detected():
+		get_new_focus()
+	
+	
+	# If have a focus
 	if (focus):
-		# Check if the focus is still in the detection range
-		if is_focus_detected():
-			handle_focus()
-		else:
-			get_new_focus()
-			
-			# target the new focus
-			if focus:
-				handle_focus()
-			# No focus could be found, target the goal_target
-			else:
-				move_towards_goal()
-	# If you do not already have a focus
+		handle_focus()
 	else:
-			get_new_focus()
-			
-			# target the new focus
-			if focus:
-				handle_focus()
-			# No focus could be found, target the goal_target
-			else:
-				move_towards_goal()
+		move_towards_goal()
 
 
 func _draw():
@@ -62,9 +52,28 @@ func move_to_preferred_focus_distance():
 
 
 func move_towards_goal():
-	var direction = position.direction_to(goal_target.position)
-	_silenced =  move_and_slide(direction * move_speed)
+	if (goal_target && is_instance_valid(goal_target)):
+		var direction = position.direction_to(goal_target.position)
+		direction += calculate_avoidance_direction_offset(direction)
+		direction.normalized()
+		_silenced =  move_and_slide(direction * move_speed)
 
+
+func calculate_avoidance_direction_offset(direction):
+	var angle_of_direction = global_position.angle_to(direction)
+	var bodies = ally_avoidance_area.get_overlapping_bodies()
+	var allies_in_direction = []
+	for body in bodies:
+		var angle_to_body = global_position.angle_to_point(body.global_position)
+		var is_in_direction = (angle_of_direction + 30 >= angle_to_body) or (angle_of_direction - 30 <= angle_to_body)
+		if body.is_in_group("order") && is_in_direction && body != self:
+			allies_in_direction.push_back(body)
+	
+	if (allies_in_direction.size() == 0):
+		return Vector2(0,0)
+	else:
+		return Vector2(cos(angle_of_direction  + 90), sin(angle_of_direction + 90))
+	
 
 func _on_AttackTimer_timeout():
 	# if the focus is in range, do damage
