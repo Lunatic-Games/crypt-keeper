@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource( 1 )
-knights = 5
+knights = 1
 min_group_size = 1
 max_group_size = 2
 time_between_groups = 5.0
