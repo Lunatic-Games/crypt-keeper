@@ -10,8 +10,15 @@ var press_count = 0
 var performing_action = ""
 var selected_units = []
 var command_flag = preload("res://player/command_flag.tscn")
+var hit_particle = preload("res://particle/hit_particle/hit_particle.tscn")
 
+var max_health = 10
+var health = max_health
+
+
+onready var health_bar = $HealthBar
 onready var pressed_timer = $PressedTimer
+onready var white_blink = $WhiteBlink
 
 
 func _physics_process(delta):
@@ -86,19 +93,18 @@ func _on_PressedTimer_timeout():
 func take_damage(damage):
 	var unit = self
 	
-	#white_blink.play("normal")
-	#health -= damage
-	#var hit_particles = hit_particle.instance()
-	#hit_particles.global_position = global_position
-	#get_tree().get_root().add_child(hit_particles)
-	#if (health <= 0):
-	#	unit = null
-	#	die()
-	#else:
-	#	health_bar.update_health(health, max_health)
+	white_blink.play("normal")
+	health -= damage
+	var hit_particles = hit_particle.instance()
+	hit_particles.global_position = global_position
+	get_tree().get_root().add_child(hit_particles)
+	if (health <= 0):
+		unit = null
+		die()
+	else:
+		health_bar.update_health(health, max_health)
 	
-	#return unit
-	pass
+	return unit
 
 
 func die():

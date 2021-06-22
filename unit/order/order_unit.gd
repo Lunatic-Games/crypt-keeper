@@ -7,7 +7,7 @@ func get_detected_chaos():
 	var bodies = detection_range.get_overlapping_bodies()
 	
 	for body in bodies:
-		if body.is_in_group("chaos"):
+		if body.is_in_group("chaos") or body.is_in_group("player"):
 			chaos.push_back(body)
 	
 	return chaos
