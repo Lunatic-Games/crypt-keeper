@@ -12,6 +12,7 @@ var focus
 var _silenced
 var hit_particle = preload("res://particle/hit_particle/hit_particle.tscn")
 var whiten_material = preload("res://shaders/whiten.tres")
+var direction
 
 onready var health = max_health
 onready var detection_range = $DetectionRange
